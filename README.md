@@ -40,11 +40,12 @@ One-click theme toggle with full UI color adaptation.
 ### 🔐 Authentication
 Default demo users (you may replace them with real ones later):
 
-| Role      | Username                 | Password |
-|-----------|---------------------------|----------|
-| Assistant | assistant@example.com     | 123456   |
-| Lawyer    | lawyer@example.com        | 123456   |
-| Judge     | judge@example.com         | 123456   |
+| Role      | Username           | Password        |
+|-----------|--------------------|-----------------|
+| Assistant | Assistant Mary     | assistant123    |
+| Lawyer    | Lawyer John        | lawyerpass      |
+| Public    | Public User        | public123       |
+| Judge     | Judge Judy         | judgepass       |
 
 ---
 
