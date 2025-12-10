@@ -1,190 +1,159 @@
-/* App.css - Responsive styling, drawer, dark/light theme, overflow fixes */
-
-/* --------------------------
-   Root / variables
-   -------------------------- */
-:root{
-  --bg: #0f1724;         /* dark bg */
-  --panel: #111827;      /* dark panel */
-  --muted: #9aa4b2;
-  --text: #e6eef8;
-  --accent: #6b46ff;
-  --accent-2: #8b5cf6;
-  --white: #ffffff;
-  --card-light: #fff;
-  --card-dark: #111827;
-  --border: rgba(255,255,255,0.06);
-  --success: #10b981;
-  --danger: #ef4444;
-}
-
-/* Light theme overrides */
-:root.light {
-  --bg: #f7f8fc;
-  --panel: #ffffff;
-  --muted: #6b7280;
-  --text: #0f1724;
+:root {
+  --bg-light: #f7f8fc;
+  --bg-dark: #0f172a;
+  --text-light: #111827;
+  --text-dark: #f3f4f6;
   --card-light: #ffffff;
-  --card-dark: #f3f4f6;
-  --border: #e6eef8;
+  --card-dark: #111827;
+  --border-light: #e5e7eb;
+  --border-dark: #334155;
+  --accent: #6366f1;
+  --accent-2: #8b5cf6;
+  --smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Dark theme overrides */
-:root.dark {
-  --bg: #0f1724;
-  --panel: #111827;
-  --muted: #9aa4b2;
-  --text: #e6eef8;
-  --card-light: #111827;
-  --card-dark: #0b1220;
-  --border: rgba(255,255,255,0.06);
+/* ---------------- Layout safety & resets ---------------- */
+html, body, #root {
+  box-sizing: border-box;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* prevent horizontal scroll */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Global reset and safety */
-* { box-sizing: border-box; }
-html, body, #root { height: 100%; width: 100%; margin: 0; padding: 0; overflow-x: hidden; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
-body { background: var(--bg); color: var(--text); transition: background .25s ease, color .25s ease; }
+*, *::before, *::after { box-sizing: inherit; }
 
-/* Containers */
-.container { max-width: 1200px; margin: 0 auto; padding: 20px; width: calc(100% - 40px); }
-.small { max-width: 900px; }
-
-/* Topbar */
-.topbar { padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.02); position: sticky; top: 0; z-index: 40; background: linear-gradient(to bottom, rgba(0,0,0,0.02), transparent); }
-.topbar-inner { display:flex; align-items:center; gap:20px; justify-content:space-between; width:100%; max-width:1200px; margin:0 auto; padding:0 20px; }
-.brand { display:flex; align-items:center; gap:14px; min-width:0; }
-.logo { width:56px; height:56px; border-radius:12px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); display:flex; align-items:center; justify-content:center; color:var(--white); font-weight:700; font-size:18px; }
-.title { font-weight:700; font-size:20px; line-height:1; margin-bottom:2px; }
-.subtitle { color:var(--muted); font-size:13px; }
-
-/* Nav area */
-.nav-area { display:flex; gap:12px; align-items:center; flex:1; justify-content:center; min-width:0; }
-.nav-desktop { display:flex; gap:12px; align-items:center; }
-.nav-mobile { display:none; } /* shown under breakpoint */
-
-/* nav buttons */
-.nav-btn { background: var(--panel); border: 1px solid var(--border); padding:12px 16px; border-radius:10px; color:var(--text); text-align:left; min-width:150px; cursor:pointer; display:flex; flex-direction:column; gap:4px; box-shadow:0 6px 18px rgba(0,0,0,0.05); transition: transform .15s ease; }
-.nav-btn .nav-btn-title { font-weight:700; }
-.nav-btn .nav-btn-sub { font-size:12px; color:var(--muted); }
-.nav-btn.active { background: linear-gradient(90deg,var(--accent),var(--accent-2)); color:white; border:none; }
-
-/* auth group - desktop */
-.auth-desktop { display:flex; align-items:center; gap:12px; min-width:0; }
-.auth-form { background:var(--panel); padding:8px; border-radius:10px; display:flex; gap:8px; align-items:center; border:1px solid var(--border); }
-.auth-form input, .auth-form select { background: transparent; color:var(--text); border-radius:8px; border:1px solid rgba(255,255,255,0.02); padding:10px 12px; min-width:160px; }
-.auth-form .btn { white-space:nowrap; }
-
-/* theme toggle */
-.theme-toggle { padding:8px 10px; border-radius:8px; border:1px solid var(--border); background:transparent; color:var(--text); cursor:pointer; }
-
-/* responsive auth area - shown on mobile */
-.auth-mobile { display:none; padding:10px 20px; }
-
-/* main layout */
-.main { padding: 28px 0; }
-.grid.two-col { display:grid; grid-template-columns: 1fr 320px; gap:20px; align-items:start; }
-.card { background: var(--panel); border-radius:14px; padding:20px; border:1px solid var(--border); box-shadow: 0 10px 30px rgba(2,6,23,0.4); }
-.card.large { min-height:300px; }
-.sidebar { padding:18px; }
-
-/* headings */
-h2 { margin:0; font-size:28px; font-weight:800; color:var(--text); }
-h3 { margin: 0; font-size:18px; font-weight:700; color:var(--text); }
-.muted { color:var(--muted); }
-.small { font-size:13px; }
-
-/* benefits */
-.benefits { display:flex; gap:12px; margin-top:12px; }
-.info { background:transparent; padding:12px; border-radius:8px; border:1px dashed rgba(255,255,255,0.02); width:100%; }
-.ask-row { display:flex; gap:10px; margin-top:16px; align-items:center; }
-.wide-input { flex:1; padding:12px 14px; border-radius:10px; border:1px solid var(--border); background: rgba(255,255,255,0.02); color:var(--text); }
-
-/* chat */
-.chat-box { margin-top:14px; background: rgba(0,0,0,0.02); padding:10px; border-radius:8px; max-height:220px; overflow:auto; border:1px solid rgba(255,255,255,0.02); }
-.chat-item { margin-bottom:10px; }
-.chat-item.ai .chat-text { background: linear-gradient(90deg,var(--accent),var(--accent-2)); color:white; display:inline-block; padding:8px 12px; border-radius:8px; }
-.chat-item.user .chat-text { background:var(--card-light); color:var(--text); padding:8px 12px; border-radius:8px; }
-
-/* card actions */
-.card-actions { display:flex; gap:10px; margin-top:12px; }
-
-/* aside elements */
-.section { margin-bottom:16px; }
-.section-title { font-weight:700; margin-bottom:8px; }
-
-/* cases list */
-.cases-list { display:flex; flex-direction:column; gap:10px; margin-top:8px; }
-.case-row { display:flex; justify-content:space-between; padding:12px; border-radius:10px; background: rgba(255,255,255,0.01); border:1px solid rgba(255,255,255,0.02); }
-.case-row.active { background: linear-gradient(90deg,var(--accent),var(--accent-2)); color:white; }
-.case-select { display:block; text-align:left; padding:10px; border-radius:8px; border:1px solid var(--border); background:transparent; color:var(--text); width:100%; }
-
-/* messages */
-.messages-scroll { max-height:200px; overflow:auto; padding:8px; background: rgba(255,255,255,0.01); border-radius:8px; border:1px solid rgba(255,255,255,0.02); }
-.msg { margin-bottom:8px; }
-
-/* small helpers */
-.row { display:flex; gap:8px; align-items:center; }
-.items-center { align-items:center; }
-.flex-1 { flex:1; }
-
-/* panel / boxed */
-.panel { background: rgba(0,0,0,0.03); padding:14px; border-radius:8px; border:1px solid rgba(255,255,255,0.02); }
-.boxed { background:var(--panel); padding:12px; border-radius:8px; border:1px solid var(--border); }
-
-.btn { padding:8px 12px; border-radius:8px; border:1px solid var(--border); background:transparent; color:var(--text); cursor:pointer; }
-.btn.primary { background: linear-gradient(90deg,var(--accent),var(--accent-2)); color:white; border:none; }
-.btn.green { background: var(--success); color:white; border:none; }
-
-/* footer */
-.footer { padding:16px 0; border-top:1px solid rgba(255,255,255,0.02); margin-top:28px; }
-.footer-note { text-align:center; color:var(--muted); }
-
-/* modal */
-.modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; z-index:80; }
-.modal { background:var(--panel); padding:18px; border-radius:10px; min-width:280px; max-width:420px; border:1px solid var(--border); }
-.modal input, .modal select { width:100%; padding:10px; margin-top:8px; border-radius:8px; border:1px solid rgba(255,255,255,0.02); background:transparent; color:var(--text); }
-
-/* drawer */
-.drawer-root { position:fixed; inset:0; z-index:100; display:flex; }
-.drawer-backdrop { position:absolute; inset:0; background:rgba(0,0,0,0.5); }
-.drawer-panel { position:relative; margin-left:auto; width:320px; max-width:92vw; background:var(--panel); padding:20px; border-radius:10px 0 0 10px; border-left:1px solid rgba(255,255,255,0.02); overflow:auto; }
-.drawer-links { display:flex; flex-direction:column; gap:10px; }
-.drawer-link { padding:12px; border-radius:8px; text-align:left; border:1px solid var(--border); background:transparent; color:var(--text); cursor:pointer; }
-.drawer-link.active { background: linear-gradient(90deg,var(--accent),var(--accent-2)); color:white; border:none; }
-.case-quick { padding:10px; border-radius:8px; text-align:left; border:1px solid var(--border); background:transparent; color:var(--text); }
-
-/* small screens: responsive rules */
-@media (max-width: 980px) {
-  .nav-desktop { display:none; }
-  .nav-mobile { display:block; }
-  .auth-desktop { display:none; }
-  .auth-mobile { display:block; }
-  .grid.two-col { grid-template-columns: 1fr; }
-  .nav-area { justify-content:flex-start; }
-  .topbar-inner { gap:12px; padding:0 12px; }
-  .brand .title { font-size:18px; }
-  .drawer-panel { width:80vw; }
+/* Body theme defaults */
+body {
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: var(--bg-light);
+  color: var(--text-light);
+  transition: background 0.25s var(--smooth), color 0.25s var(--smooth);
 }
 
-/* very small devices */
-@media (max-width: 420px) {
-  .logo { width:48px; height:48px; font-size:16px; }
-  .nav-btn { min-width:120px; padding:10px; }
-  .wide-input { font-size:14px; padding:10px; }
+/* When .dark exists on <html>, apply dark colors */
+.dark body {
+  background: var(--bg-dark);
+  color: var(--text-dark);
 }
 
-/* form and selects in light/dark mode (fix the select background issue) */
-:root.light .auth-form input, :root.light .auth-form select, :root.light .modal input, :root.light .modal select, :root.light .wide-input {
-  background: #fff; color: #0f1724; border: 1px solid #e6eef8;
-}
-:root.dark .auth-form input, :root.dark .auth-form select, :root.dark .modal input, :root.dark .modal select, :root.dark .wide-input {
-  background: rgba(255,255,255,0.02); color: var(--text); border:1px solid rgba(255,255,255,0.02);
+/* Basic element constraints */
+img, video, iframe, svg, pre, code { max-width: 100%; height: auto; display: block; }
+* { word-wrap: break-word; }
+
+/* ---------- Card / Panel baseline ---------- */
+.card {
+  background: var(--card-light);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+  transition: background 0.25s var(--smooth), border 0.25s var(--smooth);
 }
 
-/* ensure long words break */
-.break-word { word-break: break-word; overflow-wrap: break-word; }
+/* Basic dark overrides */
+.dark .card { background: var(--card-dark); border: 1px solid var(--border-dark); }
 
-/* small helper for debugging overflow - remove/comment out in production if undesired */
-/*
-* { outline: 0.25px solid rgba(255,0,0,0.03); }
+/* ---------- Helpers used by components ---------- */
+.case-card {
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  background: var(--card-light);
+  text-align: left;
+}
+.dark .case-card { background: var(--card-dark); border-color: var(--border-dark); }
+
+/* panel class (used for quick-select and other side boxes) */
+.panel {
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  background: var(--card-light);
+  padding: 12px;
+}
+.dark .panel { background: var(--card-dark); border-color: var(--border-dark); }
+
+/* fixed open button (keeps consistent layout) */
+.case-open-btn {
+  min-width: 64px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+/* select baseline */
+select {
+  border-radius: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* Ensure input placeholders are visible in dark mode */
+.dark input::placeholder, .dark textarea::placeholder {
+  color: rgba(255,255,255,0.45);
+}
+
+/* Truncate long titles */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- Light-mode explicit fixes ----------
+   We use a top-level 'light' class on the app wrapper to ensure
+   we can force-light styles for components that otherwise picked up dark
+   values from inline dynamic classes.
 */
+.light .card,
+.light .case-card,
+.light .panel {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  color: #111827 !important;
+}
+
+/* Selected case styling: both themes */
+.case-selected {
+  border-color: #c7d2fe !important;
+}
+.light .case-selected {
+  background: #eef2ff !important; /* pale indigo tint for selection */
+  color: #1e293b !important;
+}
+.dark .case-selected {
+  background: rgba(79, 70, 229, 0.25) !important; /* indigo translucent */
+  color: white !important;
+}
+
+/* Quick tool colored tiles (light/dark variants) */
+.light .panel .p-2 { background: transparent; }
+.dark .panel .p-2 { background: transparent; }
+
+.light .panel .bg-indigo-50, .light .panel .bg-green-50, .light .panel .bg-yellow-50 {
+  /* fallback if used */
+}
+
+/* Small visual niceties */
+button[aria-label] { cursor: pointer; }
+
+/* Accessibility: focus outlines */
+:focus {
+  outline-color: rgba(99,102,241,0.6);
+  outline-offset: 2px;
+}
+
+/* prevent huge elements from causing horizontal scroll */
+.max-w-6xl { max-width: 1280px; margin-left: auto; margin-right: auto; }
+
+/* small responsive tweak */
+@media (max-width: 768px) {
+  .max-w-6xl { padding-left: 12px; padding-right: 12px; }
+  .case-open-btn { height: 40px; min-width: 56px; }
+}
