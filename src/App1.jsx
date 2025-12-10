@@ -3,12 +3,15 @@ import { motion } from "framer-motion";
 
 /**
  * src/App.jsx
- * AI Judicial Suite — Responsive Front-end Prototype
+ * AI Judicial Suite — responsive front-end prototype
  *
- * Updated: Fixed mobile width overflow issues in Navbar and Judge controls.
+ * Notes:
+ *  - Mock auth & fake AI responses for demo purposes only.
+ *  - Theme toggling: sets .dark on <html> for global CSS rules,
+ *    and sets wrapper class to 'dark' or 'light' for .light-specific CSS.
  */
 
-/* ---------- Small mocked AI helper ---------- */
+/* ---------- Small mocked AI helper (replace with real API in production) ---------- */
 function fakeAiResponse(prompt, context = {}) {
   if (!prompt) return "...";
   const p = prompt.toLowerCase();
@@ -104,7 +107,6 @@ export default function AIJudicialApp() {
     <div className={`app-root ${theme === "dark" ? "dark" : "light"}`}>
       <div className={`min-h-screen ${theme === "dark" ? "bg-gray-900 text-gray-100" : "bg-gradient-to-br from-gray-50 via-white to-indigo-50 text-gray-900"}`}>
         <nav className="max-w-6xl mx-auto py-6 px-4 flex flex-wrap items-center justify-between relative gap-4">
-          {/* Logo Section */}
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 text-white flex items-center justify-center font-bold shadow-lg">AI</div>
             <div>
@@ -113,7 +115,6 @@ export default function AIJudicialApp() {
             </div>
           </div>
 
-          {/* Right Nav Section */}
           <div className="flex items-center gap-3 flex-1 justify-end">
             <div className="hidden md:flex gap-2 max-w-[680px] flex-1">
               {navItem("assistant", "AI Assistant", "Landing & legal help")}
@@ -121,7 +122,7 @@ export default function AIJudicialApp() {
               {navItem("judge", "AI Judge", "Rulings & reasoning")}
             </div>
 
-            <div className="flex flex-wrap justify-end gap-2 w-full md:w-auto">
+            <div className="flex items-center gap-2">
               <button onClick={toggleTheme} className={`px-3 py-2 rounded-lg border shadow-sm ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-black"}`}>
                 {theme === "dark" ? "🌙 Dark" : "☀️ Light"}
               </button>
@@ -132,37 +133,17 @@ export default function AIJudicialApp() {
                   <button onClick={logout} className="px-3 py-1 rounded bg-white dark:bg-gray-800 shadow-sm">Logout</button>
                 </div>
               ) : (
-                /* --- FIX: Added flex-wrap and responsive width classes (w-full sm:w-auto) --- */
-                <div className={`flex flex-wrap items-center justify-end gap-2 rounded p-2 ${theme === "dark" ? "bg-gray-800" : "bg-white"} shadow-sm w-full md:w-auto`}>
-                  <input 
-                    value={loginName} 
-                    onChange={(e) => setLoginName(e.target.value)} 
-                    placeholder="Your name" 
-                    className={`w-full sm:w-auto px-2 py-1 border rounded ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-100" : "bg-white border-gray-300 text-gray-900"}`} 
-                  />
-                  <input 
-                    value={loginPassword} 
-                    onChange={(e) => setLoginPassword(e.target.value)} 
-                    placeholder="Password" 
-                    type="password" 
-                    className={`w-full sm:w-auto px-2 py-1 border rounded ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-100" : "bg-white border-gray-300 text-gray-900"}`} 
-                  />
-                  <select 
-                    value={loginRole} 
-                    onChange={(e) => setLoginRole(e.target.value)} 
-                    className={`w-full sm:w-auto px-2 py-1 border rounded max-w-full sm:max-w-[160px] ${theme === "dark" ? "bg-gray-800 text-gray-100 border-gray-600" : "bg-white text-gray-900 border-gray-300"}`}
-                  >
+                <div className={`flex items-center gap-2 rounded p-2 ${theme === "dark" ? "bg-gray-800" : "bg-white"} shadow-sm`}>
+                  <input value={loginName} onChange={(e) => setLoginName(e.target.value)} placeholder="Your name" className={`px-2 py-1 border rounded ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-100" : "bg-white border-gray-300 text-gray-900"}`} />
+                  <input value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} placeholder="Password" type="password" className={`px-2 py-1 border rounded ${theme === "dark" ? "bg-gray-700 border-gray-600 text-gray-100" : "bg-white border-gray-300 text-gray-900"}`} />
+                  <select value={loginRole} onChange={(e) => setLoginRole(e.target.value)} className={`px-2 py-1 border rounded max-w-[160px] ${theme === "dark" ? "bg-gray-800 text-gray-100 border-gray-600" : "bg-white text-gray-900 border-gray-300"}`}>
                     <option>Judge</option>
                     <option>Lawyer</option>
                     <option>Legal Assistant</option>
                     <option>Public</option>
                   </select>
-                  
-                  {/* Buttons wrapper for better mobile stacking */}
-                  <div className="flex gap-2 w-full sm:w-auto justify-end">
-                    <button onClick={login} className="flex-1 sm:flex-none px-3 py-1 rounded bg-indigo-600 text-white">Login</button>
-                    <button onClick={() => setShowSignup(true)} className="flex-1 sm:flex-none px-3 py-1 rounded bg-green-500 text-white">Signup</button>
-                  </div>
+                  <button onClick={login} className="px-3 py-1 rounded bg-indigo-600 text-white">Login</button>
+                  <button onClick={() => setShowSignup(true)} className="px-3 py-1 rounded bg-green-500 text-white">Signup</button>
                 </div>
               )}
             </div>
@@ -213,19 +194,32 @@ export default function AIJudicialApp() {
         </main>
 
         <footer className="mt-8 py-6 border-t bg-white/60 dark:bg-gray-800">
-          <div className="max-w-6xl mx-auto px-4 text-sm text-gray-600 dark:text-gray-300 space-y-2">
-            <div className="font-medium">AI Judicial Suite</div>
-            <div>
-              This platform provides AI-assisted legal tools and information and is <strong>not</strong> a substitute for professional legal advice.
-              Use of the service is subject to our <a href="/terms" className="underline">Terms of Service</a> and <a href="/privacy" className="underline">Privacy Policy</a>.
-            </div>
-            <div>
-              Do not submit confidential, privileged, or sensitive data unless you have explicit authorization.
-              For general support or to report security issues, email <a href="mailto:support@example.com" className="underline">aijudicialsuite@example.com</a>.
-            </div>
-            <div className="text-xs text-gray-500">© {new Date().getFullYear()} AI Judicial Suite. All rights reserved.</div>
-          </div>
-        </footer>
+  <div className="max-w-6xl mx-auto px-4 text-sm text-gray-600 dark:text-gray-300 space-y-2">
+    <div className="font-medium">AI Judicial Suite</div>
+
+    <div>
+      This platform provides AI-assisted legal tools and information and is <strong>not</strong> a substitute for professional legal advice.
+      Use of the service is subject to our
+      {" "}
+      <a href="/terms" className="underline">Terms of Service</a>
+      {" "}
+      and
+      {" "}
+      <a href="/privacy" className="underline">Privacy Policy</a>.
+    </div>
+
+    <div>
+      Do not submit confidential, privileged, or sensitive data unless you have explicit authorization.
+      For general support or to report security issues, email
+      {" "}
+      <a href="mailto:support@example.com" className="underline">aijudicialsuite@example.com</a>.
+    </div>
+
+    <div className="text-xs text-gray-500">© {new Date().getFullYear()} AI Judicial Suite. All rights reserved.</div>
+  </div>
+</footer>
+
+
       </div>
 
       {/* Signup modal */}
@@ -413,7 +407,7 @@ function LawyerPage({ user, cases, setCases, selectedCaseId, setSelectedCaseId, 
         </div>
 
         <div className="mt-4 flex gap-4">
-          <div className="w-64 hidden md:block">
+          <div className="w-64">
             <div className="text-xs text-gray-500">My cases</div>
             <div className="mt-2 space-y-2">
               {cases.map((c) => (
@@ -428,13 +422,6 @@ function LawyerPage({ user, cases, setCases, selectedCaseId, setSelectedCaseId, 
               ))}
             </div>
             <div className="mt-3"><button onClick={() => setShowNew(true)} className="px-3 py-2 rounded bg-indigo-600 text-white">+ New Case</button></div>
-          </div>
-          
-          {/* Mobile Case List Fallback */}
-          <div className="md:hidden w-full mb-4">
-            <select className="w-full p-2 border rounded" onChange={(e) => setSelectedCaseId(e.target.value)} value={selectedCaseId || ""}>
-                {cases.map(c => <option key={c.id} value={c.id}>{c.id} - {c.title}</option>)}
-            </select>
           </div>
 
           <div className="flex-1">
@@ -540,7 +527,7 @@ function JudgePage({ user, cases, setCases, selectedCaseId, setSelectedCaseId, f
         </div>
 
         <div className="mt-4 flex gap-4">
-          <div className="w-64 hidden md:block">
+          <div className="w-64">
             <div className="text-xs text-gray-500">Cases</div>
             <div className="mt-2 space-y-2">
               {cases.map((c) => (
@@ -554,13 +541,6 @@ function JudgePage({ user, cases, setCases, selectedCaseId, setSelectedCaseId, f
               ))}
             </div>
           </div>
-          
-          {/* Mobile Case List Fallback */}
-          <div className="md:hidden w-full mb-4">
-            <select className="w-full p-2 border rounded" onChange={(e) => setSelectedCaseId(e.target.value)} value={selectedCaseId || ""}>
-                {cases.map(c => <option key={c.id} value={c.id}>{c.id} - {c.title}</option>)}
-            </select>
-          </div>
 
           <div className="flex-1">
             {selectedCaseId ? (
@@ -570,22 +550,20 @@ function JudgePage({ user, cases, setCases, selectedCaseId, setSelectedCaseId, f
 
                 <div className={`mt-4 p-4 rounded ${theme === "dark" ? "bg-gray-900 border-gray-700" : "bg-gray-50"}`}>
                   <div className="text-sm font-semibold">Adjudicate</div>
-                  
-                  {/* --- FIX: Added flex-wrap and responsive width controls --- */}
-                  <div className="mt-2 flex flex-wrap gap-2 items-center">
-                    <label className="text-xs text-gray-600 w-full sm:w-auto">Favor</label>
+                  <div className="mt-2 flex gap-2 items-center">
+                    <label className="text-xs text-gray-600">Favor</label>
 
                     <select
                       value={favored}
                       onChange={(e) => setFavored(e.target.value)}
-                      className={`w-full sm:w-auto px-2 py-1 border rounded max-w-[220px] appearance-none ${theme === "dark" ? "bg-gray-800 text-gray-100 border-gray-600" : "bg-white text-gray-900 border-gray-300"}`}
+                      className={`px-2 py-1 border rounded max-w-[220px] w-full md:w-auto appearance-none ${theme === "dark" ? "bg-gray-800 text-gray-100 border-gray-600" : "bg-white text-gray-900 border-gray-300"}`}
                     >
                       <option value="plaintiff">Plaintiff</option>
                       <option value="defendant">Defendant</option>
                       <option value="split">Split / Partial</option>
                     </select>
 
-                    <button onClick={evaluate} className="w-full sm:w-auto px-3 py-2 rounded bg-green-600 text-white">Evaluate</button>
+                    <button onClick={evaluate} className="px-3 py-2 rounded bg-green-600 text-white">Evaluate</button>
                   </div>
 
                   <div className="mt-4">
